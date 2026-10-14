@@ -270,7 +270,7 @@ body.locked .wa-float{display:none}
 
   <section id="tours" style="padding-top:6px">
     <h2>Choose your Cu Chi tour</h2>
-    <p class="lead">Three ways to see the tunnels. Tap a tour for the full program, prices and booking.</p>
+    <p class="lead">Four ways to see the tunnels. Tap a tour for the full program, prices and booking.</p>
     <div class="grid" id="grid"></div>
   </section>
 
@@ -458,7 +458,24 @@ const TOURS = [
   inc:["Speedboat on the Saigon River","Light breakfast and lunch","Unlimited refreshments and local fruit","English-speaking guide","All entrance fees","Hotel pick-up and drop-off (central hotels)","Travel insurance","Government tax and service charge"],
   exc:["Extra food and drinks","Shooting range (about 75,000 VND per bullet)","Tips (optional)"],
   kids:["0 – 3 years old: free","4 – 12 years old: $69","Child-sized life jackets provided"],
-  notes:["Pick-up in central District 1 & 3. Other areas: meet at the Saigon Water Bus Station.","Passport number required by local authorities, send it when booking.","Light rain is fine: boats have rain covers, ponchos and umbrellas. Vegetarian meals on request."] }
+  notes:["Pick-up in central District 1 & 3. Other areas: meet at the Saigon Water Bus Station.","Passport number required by local authorities, send it when booking.","Light rain is fine: boats have rain covers, ponchos and umbrellas. Vegetarian meals on request."] },
+
+{ id:"cuchi", plain:true, name:"Cu Chi Tunnels Half Day – Luxury & Medium Group", tag:"Luxury · Limousine", dur:"Half day",
+  sub:"Smaller groups · Minivan or Limousine",
+  pts:["Luxury minivan (max 12) or Limousine (17)","Morning or afternoon departure","Classic Cu Chi program"],
+  imgs:["old-1","old-2","old-3","old-4","old-5","old-6"],
+  departs:[["Morning","Pick-up 7:30 AM"],["Afternoon","Pick-up 12:30 PM"]],
+  steps:[
+   ["Pick-up","From hotels in District 1, or meet at our office if you stay in another district. About 1.5 hours drive to Cu Chi."],
+   ["Documentary","Watch a film about the history and construction of the tunnel system built during the Vietnam War."],
+   ["Into the tunnels","Crawl through narrow passages and see living quarters, kitchens, field hospitals, hidden trapdoors and booby traps."],
+   ["Wartime snack","Enjoy cassava and tea, the traditional snack of Vietnamese guerrillas."],
+   ["Shooting range (optional)","Try rifles such as the AK-47 and M16, extra fee."]],
+  options:[["Luxury group, max 12 people · Minivan",27,20],["Medium group, 17 people · Limousine",25,19]],
+  inc:["Air-conditioned car, pick-up and drop-off in District 1","English-speaking guide","All entrance fees","Bottle of water per person"],
+  exc:["Personal expenses","Bullets at the shooting range","VAT"],
+  kids:["Under 3 years old: free","9 years old and under: 75% of adult price","10 years and above: adult price"],
+  notes:[] }
 ];
 const src = n => `img/${typeof n==="number"?"p"+n:n}.jpg`;
 const imgsOf = t => t.imgs.map(src);
@@ -476,20 +493,20 @@ gEl.innerHTML = TOURS.map(t=>`
       <h3>${t.name}</h3>
       <div class="sub">${t.sub}</div>
       <ul class="pts">${t.pts.map(p=>`<li>${p}</li>`).join("")}</ul>
-      <div class="foot"><div class="price"><small>per person <span class="off">-10%</span></small><span class="was">${fmt(list(t.options[0][1]))}</span><b>${fmt(minPrice(t))}</b><div class="couple">💑 Couple: ${fmt(pair(t.options[0][1]))}/person (-20%)</div></div><span class="more">Details →</span></div>
+      <div class="foot">${t.plain?`<div class="price"><small>from</small><b>${fmt(minPrice(t))}</b><div class="couple" style="color:var(--muted)">${t.options.map(o=>o[0].split(",")[0]+" "+fmt(o[1])).join(" · ")}</div></div>`:`<div class="price"><small>per person <span class="off">-10%</span></small><span class="was">${fmt(list(t.options[0][1]))}</span><b>${fmt(minPrice(t))}</b><div class="couple">💑 Couple: ${fmt(pair(t.options[0][1]))}/person (-20%)</div></div>`}<span class="more">Details →</span></div>
     </div>
   </button>`).join("");
 gEl.addEventListener("click",e=>{const c=e.target.closest(".card");if(c)openTour(c.dataset.id);});
 
 /* compare */
 const CMP = [
-  ["Tunnel site","Ben Dinh","Ben Duoc","Ben Dinh"],
-  ["Crowds","Busiest site","Quiet, less touristy","Arrive before the crowds"],
-  ["Transport","Air-con bus/van","Luxury minivan","Speedboat on the Saigon River"],
-  ["Group size","Up to 27","Small group","Up to 15"],
-  ["Departures","8:00 AM or 12:30 PM","7:30 AM or 12:00 PM","7:00 AM or 11:00 AM"],
-  ["Meals","Tapioca & water","Cassava, tea, water & cake","Breakfast, lunch, drinks & fruit"],
-  ["Price / adult",...TOURS.map(t=>`<span class="was">${fmt(list(t.options[0][1]))}</span><b>${fmt(sale(t.options[0][1]))}</b> <span class="off">-10%</span><div class="couple">💑 Couple ${fmt(pair(t.options[0][1]))} (-20%)</div>`)]];
+  ["Tunnel site","Ben Dinh","Ben Duoc","Ben Dinh","Cu Chi (classic)"],
+  ["Crowds","Busiest site","Quiet, less touristy","Arrive before the crowds","Regular"],
+  ["Transport","Air-con bus/van","Luxury minivan","Speedboat on the Saigon River","Minivan or Limousine"],
+  ["Group size","Up to 27","Small group","Up to 15","12 or 17"],
+  ["Departures","8:00 AM or 12:30 PM","7:30 AM or 12:00 PM","7:00 AM or 11:00 AM","7:30 AM or 12:30 PM"],
+  ["Meals","Tapioca & water","Cassava, tea, water & cake","Breakfast, lunch, drinks & fruit","Cassava, tea & water"],
+  ["Price / adult",...TOURS.map(t=>t.plain?`from <b>${fmt(minPrice(t))}</b>`:`<span class="was">${fmt(list(t.options[0][1]))}</span><b>${fmt(sale(t.options[0][1]))}</b> <span class="off">-10%</span><div class="couple">💑 Couple ${fmt(pair(t.options[0][1]))} (-20%)</div>`)]];
 document.getElementById("cmp").innerHTML = `<table>
   <thead><tr><th></th>${TOURS.map(t=>`<th>${t.name.replace("Cu Chi Tunnels – ","").replace("Cu Chi ","")}</th>`).join("")}</tr></thead>
   <tbody>${CMP.map(r=>`<tr><th>${r[0]}</th>${r.slice(1).map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>
@@ -527,7 +544,7 @@ function openTour(id){
     <h4>Tour program</h4>
     <ul class="steps">${t.steps.map(s=>`<li><b>${s[0]}</b><p>${s[1]}</p></li>`).join("")}</ul>
     <h4>Price per person</h4>
-    ${t.options.map(o=>`<div class="opts"><div class="opt"><span>${o[0]}<br><small>Now 10% off</small></span><b><span class="was">${fmt(list(o[1]))}</span>${fmt(sale(o[1]))}</b></div><div class="opt"><span>💑 Couple / 2 adults or more<br><small>20% off per person</small></span><b><span class="was">${fmt(list(o[1]))}</span>${fmt(pair(o[1]))}</b></div><div class="opt"><span>Child</span><b>${fmt(sale(o[2]))}</b></div></div>`).join("")}
+    ${t.plain?`<div class="opts">${t.options.map(o=>`<div class="opt"><span>${o[0]}</span><b>${fmt(o[1])}</b></div>`).join("")}</div>`:t.options.map(o=>`<div class="opts"><div class="opt"><span>${o[0]}<br><small>Now 10% off</small></span><b><span class="was">${fmt(list(o[1]))}</span>${fmt(sale(o[1]))}</b></div><div class="opt"><span>💑 Couple / 2 adults or more<br><small>20% off per person</small></span><b><span class="was">${fmt(list(o[1]))}</span>${fmt(pair(o[1]))}</b></div><div class="opt"><span>Child</span><b>${fmt(sale(o[2]))}</b></div></div>`).join("")}
     <div class="two">
       <div><h4>Included</h4>${li(t.inc,"yes")}</div>
       <div><h4>Not included</h4>${li(t.exc,"no")}</div>
@@ -538,6 +555,7 @@ function openTour(id){
     <div class="book">
       <h3>Book this tour</h3>
       <div class="fields">
+        ${t.options.length>1?`<label class="full">Group<select id="bOpt">${t.options.map((o,k)=>`<option value="${k}">${o[0]} – ${fmt(o[1])}</option>`).join("")}</select></label>`:""}
         <label class="full">Departure<select id="bDep">${t.departs.map((d,k)=>`<option value="${k}">${d[0]} – ${d[1]}</option>`).join("")}</select></label>
         <label>Date<input type="date" id="bDate"></label>
         <label>Adults<input type="number" id="bAd" min="1" value="2"></label>
@@ -565,14 +583,14 @@ function openTour(id){
 let bookingMsg = "";
 function updateBook(){
   const t = cur, v = id => document.getElementById(id)?.value || "";
-  const o = t.options[0], dep = t.departs[+v("bDep") || 0];
+  const o = t.options[+v("bOpt") || 0], dep = t.departs[+v("bDep") || 0];
   const ad = Math.max(1, +v("bAd") || 1), ch = Math.max(0, +v("bCh") || 0);
-  const adP = ad>=2 ? pair(o[1]) : sale(o[1]), tot = adP*ad + sale(o[2])*ch, full = list(o[1])*ad + o[2]*ch;
-  document.getElementById("bTot").innerHTML = `${fmt(tot)} <span class="save">You save ${fmt(full-tot)}${ad>=2?" · couple price":""}</span>`;
+  const adP = t.plain ? o[1] : ad>=2 ? pair(o[1]) : sale(o[1]), tot = adP*ad + sale(o[2])*ch, full = list(o[1])*ad + o[2]*ch;
+  document.getElementById("bTot").innerHTML = t.plain ? fmt(tot) : `${fmt(tot)} <span class="save">You save ${fmt(full-tot)}${ad>=2?" · couple price":""}</span>`;
   bookingMsg = [`Hello! I'd like to book a Cu Chi tour (tunnelcuchi.com):`,
-    `Tour: ${t.name}`, `Departure: ${dep[0]} (${dep[1]})`,
+    `Tour: ${t.name}`, t.options.length>1?`Group: ${o[0]}`:"", `Departure: ${dep[0]} (${dep[1]})`,
     `Date: ${v("bDate")}`, `Adults: ${ad}`, ch?`Children: ${ch}`:"",
-    `Estimated total: ${fmt(tot)}${ad>=2?" (couple price -20%)":" (-10%)"}`,
+    `Estimated total: ${fmt(tot)}${t.plain?"":ad>=2?" (couple price -20%)":" (-10%)"}`,
     v("bName")?`Name: ${v("bName")}`:"", v("bHotel")?`Hotel: ${v("bHotel")}`:""].filter(Boolean).join("\n");
 }
 
