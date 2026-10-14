@@ -220,6 +220,22 @@ body.locked .cta{display:none}
 .fields select{background:var(--bg);border:1px solid var(--line);color:var(--text);font:inherit;font-size:15px;padding:10px 12px;border-radius:10px;width:100%}
 .more-tours{margin-top:18px;font-size:14px;color:var(--muted)}
 .more-tours a{color:var(--brand);font-weight:700}
+.off{display:inline-block;background:#e53935;color:#fff;font-size:11px;font-weight:800;padding:1px 6px;border-radius:6px;margin-left:4px;vertical-align:middle;text-decoration:none}
+.couple{font-size:12.5px;color:#d81b60;font-weight:700;margin-top:4px}
+.cmp .couple{font-size:12px}
+.opt small{color:var(--muted);font-weight:400}
+.save{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:#2e9e5b;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+/* blinking WhatsApp CTAs */
+@keyframes waBlink{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(242,107,29,.7)}50%{transform:scale(1.07);box-shadow:0 0 0 14px rgba(242,107,29,0)}}
+@keyframes waFlash{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+#ctaMain{animation:waBlink 1.1s ease-in-out infinite,waFlash .55s steps(2) infinite}
+.wa-float{position:fixed;right:18px;bottom:96px;z-index:31;width:62px;height:62px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:waRing 1.1s ease-in-out infinite;text-decoration:none}
+.wa-float svg{width:34px;height:34px}
+.wa-float span{position:absolute;right:70px;white-space:nowrap;background:#fff;color:#0b6b35;font-weight:800;font-size:13px;padding:6px 10px;border-radius:999px;box-shadow:var(--shadow);animation:waFlash .8s steps(2) infinite}
+@keyframes waRing{0%,100%{transform:scale(1) rotate(0);box-shadow:0 0 0 0 rgba(37,211,102,.75)}25%{transform:scale(1.1) rotate(-10deg)}50%{transform:scale(1.1) rotate(10deg);box-shadow:0 0 0 18px rgba(37,211,102,0)}75%{transform:scale(1.05) rotate(0)}}
+body.locked .wa-float{display:none}
+@media(max-width:520px){.wa-float span{display:none}.wa-float{bottom:88px;right:12px;width:54px;height:54px}}
+@media(prefers-reduced-motion:reduce){#ctaMain,.wa-float,.wa-float span{animation:none}}
 .team{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:18px;align-items:start}
 .team .txt{background:var(--card);box-shadow:var(--shadow);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
 .team .txt p{color:var(--muted);font-size:15px;margin-bottom:10px}
@@ -245,7 +261,7 @@ body.locked .cta{display:none}
     <h1>Cu Chi Tunnels tours<br>from <em>Saigon</em></h1>
     <p>Crawl the real wartime tunnels, see the hidden trapdoors and taste the cassava the guerrillas lived on. Choose Ben Dinh, the quieter Ben Duoc site, or skip the traffic and go by speedboat on the Saigon River.</p>
     <div class="trust">
-      <a class="chip" href="#tours"><b>from $17</b> per person</a>
+      <a class="chip" href="#tours"><b>-10%</b> now · <b>-20%</b> for couples</a>
       <a class="chip" href="#reviews"><b>★</b> Reviews on Tripadvisor &amp; Google</a>
       <a class="chip" href="#office">📍 Office: 04 Thu Khoa Huan, District 1</a>
       <span class="chip">🚐 Hotel pick-up in District 1</span>
@@ -362,6 +378,8 @@ body.locked .cta{display:none}
   <a class="btn btn-ghost" href="tel:+84789755448" data-contact="call" aria-label="Call us">☎<span class="hide-s"> Call</span></a>
 </div>
 
+<a class="wa-float" href="https://wa.me/84789755448" data-contact="wa" aria-label="Chat on WhatsApp"><span>Chat with us!</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg></a>
+
 <div class="cbox" id="cbox" aria-hidden="true">
   <div class="cpanel" role="dialog" aria-modal="true" aria-labelledby="cTitle">
     <button class="x" id="cClose" aria-label="Close">×</button>
@@ -401,7 +419,7 @@ const TOURS = [
   options:[["Group tour, max 27 people · Air-con bus/van",17,13]],
   inc:["Air-conditioned bus or van","Pick-up and drop-off at hotels in District 1","English-speaking guide","Entrance fee","Tapioca","Mineral water"],
   exc:["Shooting range","Personal expenses","Tips (optional)"],
-  kids:["Under 4 years old: free","4 – 11 years old: 75% of adult price ($13)","12 years and above: adult price"],
+  kids:["Under 4 years old: free","4 – 11 years old: $12","12 years and above: adult price"],
   notes:["Wear comfortable shoes and bring insect repellent.","Crawling into the tunnels is optional."] },
 
 { id:"benduoc", name:"Cu Chi Ben Duoc Tunnels – Luxury Minivan", tag:"Less touristy", dur:"Half day",
@@ -417,10 +435,10 @@ const TOURS = [
    ["Wartime snack","Try cassava and tea, the food guerrillas lived on during the war."],
    ["Shooting range (optional)","Try an AK-47 or M16, extra fee."],
    ["Return","Drive back to Ho Chi Minh City and drop-off at your hotel."]],
-  options:[["Small group · Luxury minivan",20,18,25]],
+  options:[["Small group · Luxury minivan",20,18]],
   inc:["Brand-new luxury minivan with hotel pick-up","English-speaking guide","All entrance fees","Drinking water, a cake and cool tissues"],
   exc:["Shooting range","Personal expenses, travel insurance","Tips (optional)"],
-  kids:["Under 5 years old: free","5 – 11 years old: $18","12 years and above: adult price"],
+  kids:["Under 5 years old: free","5 – 11 years old: $16","12 years and above: adult price"],
   notes:["Bring comfortable shoes, insect repellent, cash and your camera.","Crawling into the tunnels is optional."] },
 
 { id:"speedboat", name:"Cu Chi Tunnels by Speedboat", tag:"Premium", dur:"Half day · 6 hours",
@@ -439,12 +457,14 @@ const TOURS = [
   options:[["Speedboat · max 15 guests",92,69]],
   inc:["Speedboat on the Saigon River","Light breakfast and lunch","Unlimited refreshments and local fruit","English-speaking guide","All entrance fees","Hotel pick-up and drop-off (central hotels)","Travel insurance","Government tax and service charge"],
   exc:["Extra food and drinks","Shooting range (about 75,000 VND per bullet)","Tips (optional)"],
-  kids:["0 – 3 years old: free","4 – 12 years old: $69","Child-sized life jackets provided"],
+  kids:["0 – 3 years old: free","4 – 12 years old: $62","Child-sized life jackets provided"],
   notes:["Pick-up in central District 1 & 3. Other areas: meet at the Saigon Water Bus Station.","Passport number required by local authorities, send it when booking.","Light rain is fine: boats have rain covers, ponchos and umbrellas. Vegetarian meals on request."] }
 ];
 const src = n => `img/${typeof n==="number"?"p"+n:n}.jpg`;
 const imgsOf = t => t.imgs.map(src);
-const minPrice = t => Math.min(...t.options.map(o=>o[1]));
+const OFF = .10, COUPLE = .20;                 // current discount, couple (2+ adults) discount
+const sale = b => Math.round(b*(1-OFF)), pair = b => Math.round(b*(1-COUPLE));
+const minPrice = t => Math.min(...t.options.map(o=>sale(o[1])));
 
 /* grid */
 const gEl = document.getElementById("grid");
@@ -455,7 +475,7 @@ gEl.innerHTML = TOURS.map(t=>`
       <h3>${t.name}</h3>
       <div class="sub">${t.sub}</div>
       <ul class="pts">${t.pts.map(p=>`<li>${p}</li>`).join("")}</ul>
-      <div class="foot"><div class="price"><small>per person</small>${t.options[0][3]?`<span class="was">${fmt(t.options[0][3])}</span>`:""}<b>${fmt(minPrice(t))}</b></div><span class="more">Details →</span></div>
+      <div class="foot"><div class="price"><small>per person <span class="off">-10%</span></small><span class="was">${fmt(t.options[0][1])}</span><b>${fmt(minPrice(t))}</b><div class="couple">💑 Couple: ${fmt(pair(t.options[0][1]))}/person (-20%)</div></div><span class="more">Details →</span></div>
     </div>
   </button>`).join("");
 gEl.addEventListener("click",e=>{const c=e.target.closest(".card");if(c)openTour(c.dataset.id);});
@@ -468,7 +488,7 @@ const CMP = [
   ["Group size","Up to 27","Small group","Up to 15"],
   ["Departures","8:00 AM or 12:30 PM","7:30 AM or 12:00 PM","7:00 AM or 11:00 AM"],
   ["Meals","Tapioca & water","Cassava, tea, water & cake","Breakfast, lunch, drinks & fruit"],
-  ["Price / adult","<b>$17</b>","<b>$20</b>","<b>$92</b>"]];
+  ["Price / adult",...TOURS.map(t=>`<span class="was">${fmt(t.options[0][1])}</span><b>${fmt(sale(t.options[0][1]))}</b> <span class="off">-10%</span><div class="couple">💑 Couple ${fmt(pair(t.options[0][1]))} (-20%)</div>`)]];
 document.getElementById("cmp").innerHTML = `<table>
   <thead><tr><th></th>${TOURS.map(t=>`<th>${t.name.replace("Cu Chi Tunnels – ","").replace("Cu Chi ","")}</th>`).join("")}</tr></thead>
   <tbody>${CMP.map(r=>`<tr><th>${r[0]}</th>${r.slice(1).map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>
@@ -506,7 +526,7 @@ function openTour(id){
     <h4>Tour program</h4>
     <ul class="steps">${t.steps.map(s=>`<li><b>${s[0]}</b><p>${s[1]}</p></li>`).join("")}</ul>
     <h4>Price per person</h4>
-    <div class="opts">${t.options.map(o=>`<div class="opt"><span>${o[0]}</span><b>${o[3]?`<span class="was">${fmt(o[3])}</span>`:""}${fmt(o[1])}</b></div>`).join("")}</div>
+    ${t.options.map(o=>`<div class="opts"><div class="opt"><span>${o[0]}<br><small>Now 10% off</small></span><b><span class="was">${fmt(o[1])}</span>${fmt(sale(o[1]))}</b></div><div class="opt"><span>💑 Couple / 2 adults or more<br><small>20% off per person</small></span><b><span class="was">${fmt(o[1])}</span>${fmt(pair(o[1]))}</b></div><div class="opt"><span>Child</span><b>${fmt(sale(o[2]))}</b></div></div>`).join("")}
     <div class="two">
       <div><h4>Included</h4>${li(t.inc,"yes")}</div>
       <div><h4>Not included</h4>${li(t.exc,"no")}</div>
@@ -546,10 +566,12 @@ function updateBook(){
   const t = cur, v = id => document.getElementById(id)?.value || "";
   const o = t.options[0], dep = t.departs[+v("bDep") || 0];
   const ad = Math.max(1, +v("bAd") || 1), ch = Math.max(0, +v("bCh") || 0);
-  document.getElementById("bTot").textContent = fmt(o[1]*ad + o[2]*ch);
+  const adP = ad>=2 ? pair(o[1]) : sale(o[1]), tot = adP*ad + sale(o[2])*ch, full = o[1]*ad + o[2]*ch;
+  document.getElementById("bTot").innerHTML = `${fmt(tot)} <span class="save">You save ${fmt(full-tot)}${ad>=2?" · couple price":""}</span>`;
   bookingMsg = [`Hello! I'd like to book a Cu Chi tour (tunnelcuchi.com):`,
     `Tour: ${t.name}`, `Departure: ${dep[0]} (${dep[1]})`,
     `Date: ${v("bDate")}`, `Adults: ${ad}`, ch?`Children: ${ch}`:"",
+    `Estimated total: ${fmt(tot)}${ad>=2?" (couple price -20%)":" (-10%)"}`,
     v("bName")?`Name: ${v("bName")}`:"", v("bHotel")?`Hotel: ${v("bHotel")}`:""].filter(Boolean).join("\n");
 }
 
