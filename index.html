@@ -154,8 +154,9 @@ body.locked .cta{display:none}
 .modal.open{display:flex}
 .sheet{background:var(--bg2);border:1px solid var(--line);border-radius:18px;max-width:860px;width:100%;overflow:hidden;position:relative}
 .x{position:absolute;top:10px;right:10px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px;cursor:pointer;line-height:1}
-.gal{position:relative;aspect-ratio:16/9;background:#000}
-.gal img{width:100%;height:100%;object-fit:cover}
+.gal{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+.gal::before{content:"";position:absolute;inset:-20px;background:var(--gbg) center/cover;filter:blur(18px) brightness(.55)}
+.gal img{position:relative;width:100%;height:100%;object-fit:contain}
 .gal .nav-b{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;font-size:20px;cursor:pointer}
 .gal .prev{left:10px}.gal .next{right:10px}
 .thumbs{display:flex;gap:6px;padding:8px;overflow-x:auto;background:#eef3f8}
@@ -224,7 +225,7 @@ body.locked .cta{display:none}
 .team .txt p{color:var(--muted);font-size:15px;margin-bottom:10px}
 .team .txt ul{margin-top:6px}
 .tpics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.tpics img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;cursor:zoom-in}
+.tpics img{width:100%;aspect-ratio:1;object-fit:cover;object-position:center 25%;border-radius:10px;cursor:zoom-in}
 .tpics img:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;height:100%}
 @media(max-width:760px){.team{grid-template-columns:1fr}}
 </style>
@@ -488,6 +489,7 @@ let gi = 0, cur = null;
 function showImg(i){
   const list = imgsOf(cur); gi = (i+list.length)%list.length;
   document.getElementById("gImg").src = list[gi];
+  gal.style.setProperty("--gbg", `url(${list[gi]})`);
   document.getElementById("gImg").alt = cur.name;
   [...document.querySelectorAll("#thumbs img")].forEach((im,k)=>im.classList.toggle("on",k===gi));
 }
